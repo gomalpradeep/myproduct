@@ -1,0 +1,34 @@
+Options +FollowSymlinks
+
+RewriteEngine On
+
+
+# Deny accessing below extensions
+<Files ~ "(.json|.lock|.git)">
+Order allow,deny
+Deny from all
+</Files>
+
+
+# Deny accessing dot files
+RewriteRule (^\.|/\.) - [F]
+
+
+
+# prevent directory listings
+Options -Indexes
+IndexIgnore */*
+
+
+# follow symbolic links
+
+
+
+RewriteCond %{REQUEST_URI} !^public
+
+RewriteRule ^admin(/.+)?$ backend/web/$1 [L,PT]
+
+#RewriteRule ^common(/.+)?$ common/web/$1 
+
+RewriteRule ^(.+)?$ frontend/web/$1
+
